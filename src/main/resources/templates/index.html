@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>MovieFlix</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <h1>🎬 MovieFlix</h1>
+  <p><a href="/analytics">📊 Ver Analytics</a></p>
+
+  <h2>Lista de Filmes</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Ano</th>
+        <th>Gêneros</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="m : ${movies}">
+        <td th:text="${m.movieId}"></td>
+        <td th:text="${m.title}"></td>
+        <td th:text="${m.year}"></td>
+        <td th:text="${m.genres}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Avaliações</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Usuário</th>
+        <th>ID Filme</th>
+        <th>Nota</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="r : ${ratings}">
+        <td th:text="${r.userId}"></td>
+        <td th:text="${r.movieId}"></td>
+        <td th:text="${r.rating}"></td>
+        <td th:text="${r.ratingTs}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Adicionar Filme</h2>
+  <form action="/addMovie" method="post">
+    <input type="text" name="title" placeholder="Título" required />
+    <input type="number" name="year" placeholder="Ano" required />
+    <input type="text" name="genres" placeholder="Gêneros" required />
+    <button type="submit">Salvar</button>
+  </form>
+
+  <h2>Adicionar Avaliação</h2>
+  <form action="/addRating" method="post">
+    <input type="number" name="userId" placeholder="ID Usuário" required />
+    <input type="number" name="movieId" placeholder="ID Filme" required />
+    <input type="number" step="0.1" name="rating" placeholder="Nota (0-5)" required />
+    <button type="submit">Salvar</button>
+  </form>
+</body>
+</html>

@@ -18,6 +18,7 @@ public class Movie {
     private Integer year;
     private String genres;
     private String imdbId;
+    
 	public Integer getMovieId() {
 		return movieId;
 	}

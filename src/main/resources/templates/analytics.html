@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <title>Analytics - MovieFlix</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <h1>📊 MovieFlix Analytics</h1>
+  <p><a href="/">⬅ Voltar</a></p>
+
+  <h2>Top 5 Filmes por Nota Média</h2>
+  <table class="styled-table">
+    <thead>
+      <tr><th>Título</th><th>Média</th><th>Total Avaliações</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${topMovies}">
+        <td th:text="${row[0]}"></td>
+        <td th:text="${#numbers.formatDecimal(row[1], 1, 2)}"></td>
+        <td th:text="${row[2]}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Média de Notas por País</h2>
+  <table class="styled-table">
+    <thead>
+      <tr><th>País</th><th>Média</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${avgByCountry}">
+        <td th:text="${row[0]}"></td>
+        <td th:text="${#numbers.formatDecimal(row[1], 1, 2)}"></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Quantidade de Avaliações por País</h2>
+  <table class="styled-table">
+    <thead>
+      <tr><th>País</th><th>Qtd Avaliações</th></tr>
+    </thead>
+    <tbody>
+      <tr th:each="row : ${ratingsByCountry}">
+        <td th:text="${row[0]}"></td>
+        <td th:text="${row[1]}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
