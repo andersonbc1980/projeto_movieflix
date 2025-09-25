@@ -32,28 +32,24 @@ public class PageController {
 
     @PostMapping("/addMovie")
     public String addMovie(@RequestParam String title,
-                           @RequestParam Integer year,
+                           @RequestParam Integer movie_year,
                            @RequestParam String genres) {
         Movie m = new Movie();
-        //m.setMovieId((int)(Math.random() * 100000));
-       // m.setMovieId(31);
         m.setTitle(title);
-        m.setYear(year);
+        m.setMovie_year(movie_year);
         m.setGenres(genres);
-        m.setImdbId("tt0111161");
         movieRepo.save(m);
         return "redirect:/";
     }
 
     @PostMapping("/addRating")
     public String addRating(@RequestParam Integer userId,
-                            @RequestParam Integer movieId,
+                            @RequestParam Integer movie_id,
                             @RequestParam Double rating) {
         Rating r = new Rating();
         r.setUserId(userId);
-        r.setMovieId(movieId);
+        r.setMovie_id(movie_id);
         r.setRating(rating);
-        r.setRatingTs(java.time.Instant.now());
         ratingRepo.save(r);
         return "redirect:/";
     }

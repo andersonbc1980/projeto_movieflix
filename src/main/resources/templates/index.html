@@ -21,9 +21,9 @@
     </thead>
     <tbody>
       <tr th:each="m : ${movies}">
-        <td th:text="${m.movieId}"></td>
+        <td th:text="${m.movie_id}"></td>
         <td th:text="${m.title}"></td>
-        <td th:text="${m.year}"></td>
+        <td th:text="${m.movie_year}"></td>
         <td th:text="${m.genres}"></td>
       </tr>
     </tbody>
@@ -42,7 +42,7 @@
     <tbody>
       <tr th:each="r : ${ratings}">
         <td th:text="${r.userId}"></td>
-        <td th:text="${r.movieId}"></td>
+        <td th:text="${r.movie_id}"></td>
         <td th:text="${r.rating}"></td>
         <td th:text="${r.ratingTs}"></td>
       </tr>
@@ -52,7 +52,7 @@
   <h2>Adicionar Filme</h2>
   <form action="/addMovie" method="post">
     <input type="text" name="title" placeholder="Título" required />
-    <input type="number" name="year" placeholder="Ano" required />
+    <input type="number" name="movie_year" placeholder="Ano" required />
     <input type="text" name="genres" placeholder="Gêneros" required />
     <button type="submit">Salvar</button>
   </form>
@@ -60,7 +60,7 @@
   <h2>Adicionar Avaliação</h2>
   <form action="/addRating" method="post">
     <input type="number" name="userId" placeholder="ID Usuário" required />
-    <input type="number" name="movieId" placeholder="ID Filme" required />
+    <input type="number" name="movie_id" placeholder="ID Filme" required />
     <input type="number" step="0.1" name="rating" placeholder="Nota (0-5)" required />
     <button type="submit">Salvar</button>
   </form>

@@ -17,10 +17,10 @@ public class Rating {
     private Long id;
 
     private Integer userId;
-    private Integer movieId;
+    private Integer movie_id;
     private Double rating;
     private Instant ratingTs;
-    
+        
 	public Long getId() {
 		return id;
 	}
@@ -33,11 +33,12 @@ public class Rating {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Integer getMovieId() {
-		return movieId;
+	
+	public Integer getMovie_id() {
+		return movie_id;
 	}
-	public void setMovieId(Integer movieId) {
-		this.movieId = movieId;
+	public void setMovie_id(Integer movie_id) {
+		this.movie_id = movie_id;
 	}
 	public Double getRating() {
 		return rating;
@@ -51,6 +52,6 @@ public class Rating {
 	public void setRatingTs(Instant ratingTs) {
 		this.ratingTs = ratingTs;
 	}
-    
+	
     
 }    

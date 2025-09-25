@@ -34,7 +34,7 @@ public class AnalyticsController {
         // Top 5 filmes
         List<Object[]> topMovies = em.createQuery(
         		"SELECT m.title, AVG(r.rating) as avgRating, COUNT(r) as total " +
-        				"FROM Rating r JOIN Movie m ON r.movieId = m.movieId " +
+        				"FROM Rating r JOIN Movie m ON r.movie_id = m.movie_id " +
         				"GROUP BY m.title ORDER BY avgRating DESC", Object[].class)
         				.setMaxResults(5)
         				.getResultList();

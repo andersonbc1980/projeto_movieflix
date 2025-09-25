@@ -1,6 +1,5 @@
 package com.projetofinal.movieflix.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,18 +11,16 @@ import jakarta.persistence.Table;
 public class Movie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer movieId;
+    private Integer movie_id;
     private String title;
-    @Column(name = "movie_year")
-    private Integer year;
+    private Integer movie_year;
     private String genres;
-    private String imdbId;
     
-	public Integer getMovieId() {
-		return movieId;
+	public Integer getMovie_id() {
+		return movie_id;
 	}
-	public void setMovieId(Integer movieId) {
-		this.movieId = movieId;
+	public void setMovie_id(Integer movie_id) {
+		this.movie_id = movie_id;
 	}
 	public String getTitle() {
 		return title;
@@ -31,11 +28,11 @@ public class Movie {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public Integer getYear() {
-		return year;
+	public Integer getMovie_year() {
+		return movie_year;
 	}
-	public void setYear(Integer year) {
-		this.year = year;
+	public void setMovie_year(Integer movie_year) {
+		this.movie_year = movie_year;
 	}
 	public String getGenres() {
 		return genres;
@@ -43,12 +40,6 @@ public class Movie {
 	public void setGenres(String genres) {
 		this.genres = genres;
 	}
-	public String getImdbId() {
-		return imdbId;
-	}
-	public void setImdbId(String imdbId) {
-		this.imdbId = imdbId;
-	}
-    
+	        
         
 }
