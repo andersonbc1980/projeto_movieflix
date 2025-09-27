@@ -1,6 +1,8 @@
 package com.projetofinal.movieflix.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
@@ -8,27 +10,30 @@ import jakarta.persistence.Table;
 @Table(name = "users")
 public class User {
 
-    @Id
-    private Integer userId;
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer user_id;
     private String country;
-    private Integer birthYear;
+    private Integer birth_year;
 
-    public Integer getUserId() { 
-    	return userId; 
-    }
-    public void setUserId(Integer userId) { 
-    	this.userId = userId; 
-    }
-    public String getCountry() { 
+    
+    public Integer getUser_id() {
+		return user_id;
+	}
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
+	}
+	public String getCountry() { 
     	return country; 
     }
     public void setCountry(String country) { 
     	this.country = country; 
     }
-    public Integer getBirthYear() { 
-    	return birthYear; 
-    }
-    public void setBirthYear(Integer birthYear) { 
-    	this.birthYear = birthYear; 
-    }
+	public Integer getBirth_year() {
+		return birth_year;
+	}
+	public void setBirth_year(Integer birth_year) {
+		this.birth_year = birth_year;
+	}
+    
 }

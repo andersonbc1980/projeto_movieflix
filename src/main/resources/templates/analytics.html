@@ -9,7 +9,20 @@
   <h1>📊 MovieFlix Analytics</h1>
   <p><a href="/">⬅ Voltar</a></p>
 
-  <h2>Top 5 Filmes por Nota Média</h2>
+  <h2>Top 5 Filmes da última semana</h2>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Filme</th><th>Média</th></tr>
+      </thead>
+      <tbody>
+        <tr th:each="row : ${topMoviesLastWeek}">
+          <td th:text="${row[0]}"></td>
+          <td th:text="${#numbers.formatDecimal(row[1], 1, 2)}"></td>
+        </tr>
+      </tbody>
+    </table>
+	
+   <h2>Top 5 Filmes por Nota Média</h2>
   <table class="styled-table">
     <thead>
       <tr><th>Título</th><th>Média</th><th>Total Avaliações</th></tr>
@@ -22,6 +35,19 @@
       </tr>
     </tbody>
   </table>
+  
+  <h2>Média por gênero</h2>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Gênero</th><th>Média</th></tr>
+      </thead>
+      <tbody>
+        <tr th:each="row : ${avgRatingByGenre}">
+          <td th:text="${row[0]}"></td>
+          <td th:text="${#numbers.formatDecimal(row[1], 1, 2)}"></td>
+        </tr>
+      </tbody>
+    </table>
 
   <h2>Média de Notas por País</h2>
   <table class="styled-table">

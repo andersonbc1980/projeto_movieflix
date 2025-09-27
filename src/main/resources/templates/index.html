@@ -9,6 +9,42 @@
   <h1>🎬 MovieFlix</h1>
   <p><a href="/analytics">📊 Ver Analytics</a></p>
 
+  <h2>Adicionar Filme</h2>
+    <form action="/addMovie" method="post">
+      <input type="text" name="title" placeholder="Título" required />
+      <input type="number" name="movie_year" placeholder="Ano" required />
+  	<select id="genero" name="genres" required>
+  	        <option value="" disabled selected>Gênero</option>
+  	        
+  	        <option value="Ação">Ação</option>
+  	        <option value="Comédia">Comédia</option>
+  	        <option value="Drama">Drama</option>
+  	        <option value="Sci-Fi">Sci-Fi</option>
+  	        <option value="Terror">Terror</option>
+  			<option value="Fantasia">Fantasia</option>
+  			<option value="Animação">Animação</option>
+  			<option value="Crime">Crime</option>
+  			<option value="Romance">Romance</option>
+  	        
+  	        </select>
+      <button type="submit">Salvar</button>
+    </form>
+
+    <h2>Adicionar Avaliação</h2>
+    <form action="/addRating" method="post">
+      <input type="number" name="user_id" placeholder="ID Usuário" required />
+      <input type="number" name="movie_id" placeholder="ID Filme" required />
+      <input type="number" step="0.1" name="rating" placeholder="Nota (0-5)" required />
+      <button type="submit">Salvar</button>
+    </form>
+	
+	<h2>Adicionar Usuário</h2>
+	    <form action="/addUser" method="post">
+	      <input type="text" name="country" placeholder="País" required />
+	      <input type="number" name="birth_year" placeholder="Ano de nascimento" required />
+	      <button type="submit">Salvar</button>
+	    </form>
+		
   <h2>Lista de Filmes</h2>
   <table>
     <thead>
@@ -41,28 +77,32 @@
     </thead>
     <tbody>
       <tr th:each="r : ${ratings}">
-        <td th:text="${r.userId}"></td>
+        <td th:text="${r.user_id}"></td>
         <td th:text="${r.movie_id}"></td>
         <td th:text="${r.rating}"></td>
-        <td th:text="${r.ratingTs}"></td>
+        <td th:text="${r.rating_ts}"></td>
       </tr>
     </tbody>
   </table>
+  
+  <h2>Lista de Usuários</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>País</th>
+          <th>Ano de nascimento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr th:each="u : ${users}">
+          <td th:text="${u.user_id}"></td>
+          <td th:text="${u.country}"></td>
+          <td th:text="${u.birth_year}"></td>
+        </tr>
+      </tbody>
+    </table>
 
-  <h2>Adicionar Filme</h2>
-  <form action="/addMovie" method="post">
-    <input type="text" name="title" placeholder="Título" required />
-    <input type="number" name="movie_year" placeholder="Ano" required />
-    <input type="text" name="genres" placeholder="Gêneros" required />
-    <button type="submit">Salvar</button>
-  </form>
-
-  <h2>Adicionar Avaliação</h2>
-  <form action="/addRating" method="post">
-    <input type="number" name="userId" placeholder="ID Usuário" required />
-    <input type="number" name="movie_id" placeholder="ID Filme" required />
-    <input type="number" step="0.1" name="rating" placeholder="Nota (0-5)" required />
-    <button type="submit">Salvar</button>
-  </form>
+  
 </body>
 </html>

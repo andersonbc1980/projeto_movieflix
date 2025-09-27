@@ -1,6 +1,5 @@
 package com.projetofinal.movieflix.controllers;
 
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,27 +8,28 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projetofinal.movieflix.model.Rating;
-import com.projetofinal.movieflix.repositories.RatingRepository;
+import com.projetofinal.movieflix.model.User;
+import com.projetofinal.movieflix.repositories.UserRepository;
+
+
 
 @RestController
-@RequestMapping("/ratings")
-public class RatingController {
+@RequestMapping("/users")
+public class UserController {
 
-    private final RatingRepository repo;
+    private final UserRepository repo;
 
-    public RatingController(RatingRepository repo) {
+    public UserController(UserRepository repo) {
         this.repo = repo;
     }
 
     @GetMapping
-    public List<Rating> all() {
+    public List<User> getAll() {
         return repo.findAll();
     }
 
     @PostMapping
-    public Rating create(@RequestBody Rating r) {
-        if (r.getRating_ts() == null) r.setRating_ts(Instant.now());
-        return repo.save(r);
+    public User addUser(@RequestBody User m) {
+        return repo.save(m);
     }
 }

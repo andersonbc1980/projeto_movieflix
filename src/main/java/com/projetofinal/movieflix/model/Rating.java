@@ -16,10 +16,10 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Integer userId;
+    private Integer user_id;
     private Integer movie_id;
     private Double rating;
-    private Instant ratingTs;
+    private Instant rating_ts;
         
 	public Long getId() {
 		return id;
@@ -27,13 +27,13 @@ public class Rating {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Integer getUserId() {
-		return userId;
+		
+	public Integer getUser_id() {
+		return user_id;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
-	
 	public Integer getMovie_id() {
 		return movie_id;
 	}
@@ -46,12 +46,13 @@ public class Rating {
 	public void setRating(Double rating) {
 		this.rating = rating;
 	}
-	public Instant getRatingTs() {
-		return ratingTs;
+	public Instant getRating_ts() {
+		return rating_ts;
 	}
-	public void setRatingTs(Instant ratingTs) {
-		this.ratingTs = ratingTs;
+	public void setRating_ts(Instant rating_ts) {
+		this.rating_ts = rating_ts;
 	}
+	
 	
     
 }    
