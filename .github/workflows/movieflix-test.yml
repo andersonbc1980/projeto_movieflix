@@ -63,6 +63,6 @@ jobs:
         if: always()
         run: |
           echo "Parando e removendo containers e rede temporários..."
-        docker stop postgres-dados movieflix-app proxy || true
-        docker rm postgres-dados movieflix-app proxy || true
-        docker network rm movieflix-net || true
+          docker stop postgres-dados movieflix-app proxy || true
+          docker rm postgres-dados movieflix-app proxy || true
+          docker network rm movieflix-net || true
