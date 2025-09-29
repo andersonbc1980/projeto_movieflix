@@ -20,49 +20,57 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # 3. Buil do Java 
+      # 3. Garante que o JDK 21 seja instalado
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'     
+          distribution: 'temurin'
+          cache: maven
+
+      # 4. Buil do Java 
       - name: Build com Maven
         run: mvn clean package -DskipTests
 
-      # 4. Build da imagem
+      # 5. Build da imagem
       - name: Build da imagem
         run: |
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest .
              
-      # 5. Criar rede 
+      # 6. Criar rede 
       - name: Criar rede docker 
         run: docker network create movieflix-net
       
-      # 6. Subir Postgres 
+      # 7. Subir Postgres 
       - name: Rodar Postgres 
         run: | 
           docker run -d --name postgres-dados --network movieflix-net -e POSTGRES_USER=user -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=movieflix-db -p 5432:5432 postgres:15 
           sleep 10
      
-      # 7. Rodar aplicação 
+      # 8. Rodar aplicação 
       - name: Subir aplicação 
         run: | 
           docker run -d --name movieflix-app --network movieflix-net -e DB_HOST=postgres-dados -e DB_USER=user -e DB_PASSWORD=secret -e DB_NAME=movieflix-db ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest
           sleep 15
         
-      # 8. Build e rodar Nginx 
+      # 9. Build e rodar Nginx 
       - name: Subir Nginx proxy 
         run: | 
           docker build -t movieflix-nginx ./Proxy-reverso 
           docker run -d --name proxy --network movieflix-net -p 5000:80 movieflix-nginx 
           sleep 5  
       
-      # 9. Teste via proxy reverso 
+      # 10. Teste via proxy reverso 
       - name: Testar aplicação via Nginx 
         run: | 
           curl -f http://localhost:5000/ || (echo "Teste falhou" && exit 1)
 
-      # 10. Push da imagem para o Docker Hub 
+      # 11. Push da imagem para o Docker Hub 
       - name: Push da imagem 
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest  
 
-      # 11. Limpeza
+      # 12. Limpeza
       - name: Limpar containers e rede
         if: always()
         run: |
