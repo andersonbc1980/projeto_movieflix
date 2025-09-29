@@ -32,29 +32,32 @@ jobs:
       - name: Build com Maven
         run: mvn clean package -DskipTests
 
-      # 5. Build da imagem
-      - name: Build da imagem
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest .
-             
-      # 6. Criar rede 
+      # 5. Criar rede 
       - name: Criar rede docker 
         run: docker network create movieflix-net
       
-      # 7. Subir Postgres 
+      # 6. Subir Postgres 
       - name: Rodar Postgres 
         run: | 
           docker run -d --name postgres-dados --network movieflix-net -e POSTGRES_USER=user -e POSTGRES_PASSWORD=secret -e POSTGRES_DB=movieflix-db -p 5432:5432 postgres:15 
-          sleep 10
-     
-      # 8. Rodar aplicação 
-      - name: Subir aplicação 
-        run: | 
-          docker run -d --name movieflix --network movieflix-net -e DB_HOST=postgres-dados -e DB_USER=user -e DB_PASSWORD=secret -e DB_NAME=movieflix-db ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest
           sleep 15
+     
+      # 7. Ler arquivos .csv e incluir dados no banco
+      - name: Build e Run ETL
+        run: |
+          docker build -t etl-postgres ./Postgres
+          docker run --rm --name etl-run --network movieflix-net -v ${{ github.workspace }}/Postgres/data:/app/data -e PG_USER=user -e PG_PASS=secret -e PG_DB=movieflix-db -e PG_HOST=postgres-dados etl-postgres
+          sleep 10
+          
+      # 8. Rodar aplicação 
+      - name: Build e run da aplicação 
+        run: | 
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest .
+          docker run -d --name movieflix --network movieflix-net -e DB_HOST=postgres-dados -e DB_USER=user -e DB_PASSWORD=secret -e DB_NAME=movieflix-db ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest
+          sleep 20
         
       # 9. Build e rodar Nginx 
-      - name: Subir Nginx proxy 
+      - name: Build e run Nginx proxy 
         run: | 
           docker build -t movieflix-nginx ./Proxy-reverso 
           docker run -d --name proxy --network movieflix-net -p 80:80 movieflix-nginx 
@@ -75,6 +78,6 @@ jobs:
         if: always()
         run: |
           echo "Parando e removendo containers e rede temporários..."
-          docker stop postgres-dados movieflix-app proxy || true
-          docker rm postgres-dados movieflix-app proxy || true
+          docker stop postgres-dados movieflix proxy etl-run || true
+          docker rm postgres-dados movieflix proxy etl-run|| true
           docker network rm movieflix-net || true
