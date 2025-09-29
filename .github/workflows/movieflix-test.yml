@@ -50,20 +50,20 @@ jobs:
       # 8. Rodar aplicação 
       - name: Subir aplicação 
         run: | 
-          docker run -d --name movieflix-app --network movieflix-net -e DB_HOST=postgres-dados -e DB_USER=user -e DB_PASSWORD=secret -e DB_NAME=movieflix-db ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest
+          docker run -d --name movieflix --network movieflix-net -e DB_HOST=postgres-dados -e DB_USER=user -e DB_PASSWORD=secret -e DB_NAME=movieflix-db ${{ secrets.DOCKERHUB_USERNAME }}/movieflix-app:latest
           sleep 15
         
       # 9. Build e rodar Nginx 
       - name: Subir Nginx proxy 
         run: | 
           docker build -t movieflix-nginx ./Proxy-reverso 
-          docker run -d --name proxy --network movieflix-net -p 8080:80 movieflix-nginx 
+          docker run -d --name proxy --network movieflix-net -p 80:80 movieflix-nginx 
           sleep 10  
       
       # 10. Teste via proxy reverso 
       - name: Testar aplicação via Nginx 
         run: | 
-          curl -f http://localhost:8080/ || (echo "Teste falhou" && exit 1)
+          curl -f http://localhost:80/ || (echo "Teste falhou" && exit 1)
 
       # 11. Push da imagem para o Docker Hub 
       - name: Push da imagem 
